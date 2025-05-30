@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class UserRepository {
-    ConcurrentHashMap<String, User> users = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, User> users = new ConcurrentHashMap<>();
 
     public void register(User guest) {
         users.put(guest.getName(), guest);
