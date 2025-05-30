@@ -15,19 +15,19 @@ public class AuthorizationService {
     UserRepository userRepository;
 
     @Autowired
-    public AuthorizationService(UserRepository userRepository){
+    public AuthorizationService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public void register(User guest){
+    public void register(User guest) {
         userRepository.register(guest);
     }
 
-    public List<Authorities> getAuthorities(String user, String password) {
-        if (isEmpty(user) || isEmpty(password)) {
+    public List<Authorities> getAuthorities(User user) {
+        if (isEmpty(user.getName()) || isEmpty(user.getPassword())) {
             throw new InvalidCredentials("User name or password is empty");
         }
-        List<Authorities> userAuthorities = userRepository.getUserAuthorities(user, password);
+        List<Authorities> userAuthorities = userRepository.getUserAuthorities(user);
         if (isEmpty(userAuthorities)) {
             throw new UnauthorizedUser("Unknown user " + user);
         }

@@ -3,6 +3,8 @@ package ru.netology.springrest.repository;
 import org.springframework.stereotype.Component;
 import ru.netology.springrest.model.Authorities;
 import ru.netology.springrest.model.User;
+import ru.netology.springrest.model.exceptions.InvalidCredentials;
+import ru.netology.springrest.model.exceptions.UnauthorizedUser;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -15,14 +17,17 @@ public class UserRepository {
         users.put(guest.getName(), guest);
     }
 
-    public List<Authorities> getUserAuthorities(String user, String password) {
-        if(!users.containsKey(user)){
+    public List<Authorities> getUserAuthorities(User user) {
+        if (!users.containsKey(user.getName())) {
             return null;
         }
-        User authorized = users.get(user);
-        if(!authorized.getPassword().equals(password) || authorized.getAuthorities() == null || authorized.getAuthorities().isEmpty()){
-            return null;
+        User authorized = users.get(user.getName());
+        if (!authorized.getPassword().equals(user.getPassword())) {
+            throw new InvalidCredentials("Password is incorrect for user " + authorized.getName());
+        } else if (authorized.getAuthorities() == null || authorized.getAuthorities().isEmpty()) {
+            throw new UnauthorizedUser(String.format("User %s has no authorities", authorized.getName()));
         }
+
         return authorized.getAuthorities();
     }
 }
