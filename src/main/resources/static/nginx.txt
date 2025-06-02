@@ -1,0 +1,11 @@
+location / {
+    proxy_pass http://localhost:8080;
+}
+
+
+location /signin {
+    root C:/Users/Aysel/NGINX/nginx-1.28.0;
+	proxy_cache_bypass $cookie_nocache $arg_nocache;
+	expires off;
+	try_files /html/mySpringRest/signin.html /dev/null =404;
+}

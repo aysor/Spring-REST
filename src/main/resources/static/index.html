@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to our platform!</title>
+</head>
+<body>
+<h1>Welcome to our platform!</h1>
+<h2>You can register or sign in:</h2>
+
+<form action="/handle-form" method="post"  target="_blank">
+    <input type="hidden" id="targetController" name="targetController" value="">
+    <label for="name">User name:</label>
+    <input type="text" id="name" name="name"><br><br>
+    <label for="password">Password:</label>
+    <input type="text" id="password" name="password"><br><br>
+
+    <label for="authorities">Authorities:</label>
+    <input type="text" id="authorities" name="authorities"><br><br>
+    <button type="submit" name="authorize" onclick="document.getElementById('targetController').value = 'authorize'">Authorize</button>
+    <button type="submit" name="register" onclick="document.getElementById('targetController').value = 'register'">Register</button>
+</form>
+</body>
+</html>
